@@ -21,6 +21,7 @@ const Nav = () => {
                 {user ? (
                     <>
                         <Link href="/create-prompt" className="p-2 cursor-pointer border border-gray-300 rounded bg-black text-white">Create Post</Link>
+                        <Link href="/profile" className="p-2 cursor-pointer border border-gray-300 rounded bg-black text-white">Profile</Link>
                         <div className="w-9 h-9 rounded-full overflow-hidden">
                             <UserButton afterSignOutUrl="/" />
                         </div>

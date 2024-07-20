@@ -28,7 +28,7 @@ const CreatePrompt = () => {
                 prompt: post.prompt,
                 userId: userDetails,
                 tag: post.tag
-            });
+            },);
 
             if(response.status==200){
                 router.push('/')

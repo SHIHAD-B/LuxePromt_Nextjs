@@ -1,8 +1,10 @@
+import PromptCard from "./PromptCard"
 
-
-const Profile = () => {
+const Profile = ({ name, desc, data, handleEdit, handleDelete }: any) => {
   return (
-    <div>Profile</div>
+    <section className="w-full">
+      <h1>{name} Profile</h1>
+    </section>
   )
 }
 

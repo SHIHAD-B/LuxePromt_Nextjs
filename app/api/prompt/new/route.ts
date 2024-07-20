@@ -1,16 +1,18 @@
 import { connectToDb } from "@utils/database";
 import User from "@models/user";
 import Prompt from "@models/prompt";
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest } from "next/server";
 
-export const POST = async (req: NextApiRequest) => {
+
+export const POST = async (req: NextRequest) => {
     try {
-        const { prompt, userId, tag } = await req.body;
-
+        const body = await req.json();
+        const { prompt, userId, tag } = body;
+    
         await connectToDb();
 
         let creator;
-        const userExists = await User.findOne({ email: userId.email });
+        const userExists = await User.findOne({ email: userId?.email });
 
         if (userExists) {
             creator = userExists._id;
@@ -30,6 +32,6 @@ export const POST = async (req: NextApiRequest) => {
 
     } catch (error) {
         console.error('Error creating prompt:', error);
-        return new Response('Internal Server Error', { status: 500 });
+        return new Response('Internal Server Error...', { status: 500 });
     }
 };
