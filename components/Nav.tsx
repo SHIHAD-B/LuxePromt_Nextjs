@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from 'next/image';
 import logo from '../public/assets/images/logo.svg';
 import { useUser, SignInButton, UserButton } from '@clerk/nextjs';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Nav = () => {
     const { user } = useUser();
@@ -27,7 +27,7 @@ const Nav = () => {
                     </>
                 ) : (
                     <SignInButton>
-                        <button className="p-2 border border-gray-300 bg-black text-white rounded-full">
+                        <button className="p-2 border border-gray-300 bg-black text-white rounded">
                             Sign In
                         </button>
                     </SignInButton>
@@ -49,7 +49,7 @@ const Nav = () => {
                     </>
                 ) : (
                     <SignInButton>
-                        <button className="p-2 border border-gray-300 bg-black text-white rounded-full">
+                        <button className="p-2 border border-gray-300 bg-black text-white rounded">
                             Sign In
                         </button>
                     </SignInButton>
@@ -60,3 +60,4 @@ const Nav = () => {
 };
 
 export default Nav;
+
