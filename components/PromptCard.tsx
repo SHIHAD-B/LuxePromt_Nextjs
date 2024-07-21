@@ -4,7 +4,11 @@ import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { TbCopy, TbCopyCheckFilled } from "react-icons/tb";
 import { useState } from 'react'
+import { useUser } from "@clerk/nextjs"
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }: any) => {
+  const user = useUser()
+  const pathName=usePathname()
+  const router=useRouter()
 
   const [copied, setCopied] = useState("")
 
@@ -29,6 +33,12 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }: any) => 
       </div>
       <p className='my-4 font-satoshi text-sm text-gray-700'>{post.prompt}</p>
       <p className='font-inter text-sm blue_gradient cursor-pointer' onClick={() => handleTagClick && handleTagClick(post.tag)}>{post.tag}</p>
+    {user?.user?.primaryEmailAddress?.emailAddress==post.creator.email&& pathName=='/profile'&&(
+      <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
+        <p className='font-inter text-sm green_gradient cursor-pointer' onClick={handleEdit}>Edit</p>
+        <p className='font-inter text-sm orange_gradient cursor-pointer' onClick={handleDelete}>Delete</p>
+      </div>
+    )}
     </div>
   )
 }

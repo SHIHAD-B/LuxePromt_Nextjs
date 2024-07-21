@@ -5,38 +5,40 @@ import Profile from '@components/Profile'
 import axios from "axios"
 
 const MyProfile = () => {
-    const user = useUser()
-   const [posts,setPosts]=useState([])
+  const user = useUser()
+  const [posts, setPosts] = useState([])
 
-    useEffect(() => {
-        const fetchPost = async () => {
-          try {
-            const response = await axios.get(`http://localhost:3000/api/users/${user?.user?.primaryEmailAddress?.emailAddress}/post`);
-            setPosts(response.data);
-          } catch (error) {
-            console.error("Error fetching posts:", error);
-          }
-        }
-        if(user?.user?.primaryEmailAddress?.emailAddress) fetchPost();
-      }, []);
-
-
-    const hadleEdit=()=>{
-
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/users/${user?.user?.primaryEmailAddress?.emailAddress}/post`);
+        console.log(response.data, "res data")
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
     }
+    if (user?.user?.primaryEmailAddress?.emailAddress) fetchPost();
+  }, []);
 
-    const handleDelete= async()=>{
 
-    }
-    return (
-        <Profile
-            name="my"
-            desc="Welcome to Your Profile"
-            data={posts}
-            handleEdit={hadleEdit}
-            handleDelete={handleDelete}
-        />
-    )
+
+  const hadleEdit = () => {
+
+  }
+
+  const handleDelete = async () => {
+
+  }
+  return (
+    <Profile
+      name="my"
+      desc="Welcome to Your Profile"
+      data={posts}
+      handleEdit={hadleEdit}
+      handleDelete={handleDelete}
+    />
+  )
 }
 
 export default MyProfile
