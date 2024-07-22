@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import Profile from '@components/Profile';
 import axios from "axios";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 
 const MyProfile = () => {
   const { user } = useUser();
@@ -27,8 +27,18 @@ const MyProfile = () => {
     router.push(`/update-prompt?id=${post._id}`);
   }
 
-  const handleDelete = async (post: string) => {
-    
+  const handleDelete = async (post: any) => {
+    const hasConfirmed = confirm("Are you sure to delete this prompt?..")
+    if (hasConfirmed) {
+      try {
+        await axios.delete(`/api/prompt/${post._id}`)
+        const filteredPost = posts.filter((p: any) => p._id !== post._id)
+        setPosts(filteredPost)
+      } catch (error) {
+        console.log(error)
+
+      }
+    }
   }
 
   return (

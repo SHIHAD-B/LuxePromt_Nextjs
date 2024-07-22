@@ -5,6 +5,9 @@ import axios from "axios"
 
 interface Post {
   _id: string;
+  prompt: string;
+  tag: string;
+  creator: any;
 }
 
 interface PromptCardListProps {
@@ -14,7 +17,7 @@ interface PromptCardListProps {
 
 const PromptCardList = ({ data, handleTagClick }: PromptCardListProps) => {
   return (
-    <div className="mt-16 promt_layout">
+    <div className="mt-16 prompt_layout">
       {data.map((post) => (
         <PromptCard key={post._id} post={post} handleTagClick={handleTagClick} />
       ))}
@@ -23,15 +26,33 @@ const PromptCardList = ({ data, handleTagClick }: PromptCardListProps) => {
 }
 
 const Feed = () => {
-  const [searchtext, setSearchText] = useState<string>("");
+  const [searchText, setSearchText] = useState<string>("");
   const [posts, setPosts] = useState<Post[]>([]);
+  const [filteredData, setFilteredData] = useState<Post[]>([]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+    const searchText = e.target.value;
+    setSearchText(searchText);
+
+    if (searchText.trim() !== "") {
+      const pattern = new RegExp(searchText, 'i');
+      const filtered = posts.filter((item) =>
+        pattern.test(item.prompt) ||
+        pattern.test(item.tag) ||
+        pattern.test(item.creator.username)
+      );
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(posts);
+    }
   }
 
   useEffect(() => {
-    const fetchPost = async () => {
+    setFilteredData(posts);
+  }, [posts]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/prompt');
         setPosts(response.data);
@@ -39,7 +60,7 @@ const Feed = () => {
         console.error("Error fetching posts:", error);
       }
     }
-    fetchPost();
+    fetchPosts();
   }, []);
 
   return (
@@ -48,7 +69,7 @@ const Feed = () => {
         <input
           type="text"
           placeholder="Search tag or username"
-          value={searchtext}
+          value={searchText}
           onChange={handleSearchChange}
           required
           className="search_input peer"
@@ -56,8 +77,8 @@ const Feed = () => {
       </form>
 
       <PromptCardList
-        data={posts}
-        handleTagClick={(tag) => { /* Implement tag click handling */ }}
+        data={filteredData}
+        handleTagClick={(tag) => { /* Implement tag click logic here */ }}
       />
     </section>
   )
