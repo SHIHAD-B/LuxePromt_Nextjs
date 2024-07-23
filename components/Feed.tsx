@@ -49,7 +49,7 @@ const Feed = () => {
 
   useEffect(() => {
     setFilteredData(posts);
-  }, []);
+  }, [posts]);
 
   useEffect(() => {
     const fetchPosts = async () => {
