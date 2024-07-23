@@ -3,6 +3,8 @@ import Prompt from "@models/prompt";
 import { NextRequest } from "next/server";
 import User from "@models/user";
 
+export const dynamic="force-dynamic"
+
 export const GET= async(req:NextRequest)=>{
  try {
     await connectToDb();

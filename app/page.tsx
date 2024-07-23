@@ -9,7 +9,7 @@ const Home = () => {
         <span className="teal_gradient text-center">Intelligent prompts</span>
         <p className="desc text-center">"Luxepromt is an open-source platform for sharing creative prompts, fostering collaboration across themes like writing, art, and brainstorming."</p>
     </h1>
-    <Feed/>
+    <Feed />
    </section>
   )
 }

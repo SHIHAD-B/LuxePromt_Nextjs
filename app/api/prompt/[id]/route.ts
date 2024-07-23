@@ -3,6 +3,7 @@ import Prompt from "@models/prompt";
 import { NextRequest } from "next/server";
 import User from "@models/user";
 
+
 export const GET = async (req: NextRequest, { params }: any) => {
     try {
         await connectToDb();
@@ -12,6 +13,8 @@ export const GET = async (req: NextRequest, { params }: any) => {
             model: User,
         });
         if (!prompt) return new Response("prompt not found", { status: 404 })
+        const headers = new Headers();
+        headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate=59');
 
         return new Response(JSON.stringify(prompt), { status: 200 });
     } catch (error) {
@@ -27,14 +30,16 @@ export const PATCH = async (req: NextRequest, { params }: any) => {
     try {
         await connectToDb()
 
-        const existingPrompt = await Prompt.findOne({_id:params?.id})
-       
+        const existingPrompt = await Prompt.findOne({ _id: params?.id })
+
         if (!existingPrompt) return new Response("Prompt not found", { status: 404 })
 
         existingPrompt.prompt = prompt
         existingPrompt.tag = tag
 
         await existingPrompt.save()
+        const headers = new Headers();
+        headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate=59');
 
         return new Response(JSON.stringify(existingPrompt), { status: 200 })
     } catch (error) {
@@ -50,6 +55,8 @@ export const DELETE = async (req: NextRequest, { params }: any) => {
         await connectToDb()
 
         await Prompt.findByIdAndDelete(params.id)
+        const headers = new Headers();
+        headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate=59');
         return new Response("prompt deleted successfull", { status: 200 })
     } catch (error) {
         console.log("failed to delete prompt")
