@@ -1,14 +1,14 @@
 'use client'
 
 import Image from 'next/image'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { TbCopy, TbCopyCheckFilled } from "react-icons/tb";
 import { useState } from 'react'
 import { useUser } from "@clerk/nextjs"
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }: any) => {
   const user = useUser()
   const pathName=usePathname()
-  const router=useRouter()
+
 
   const [copied, setCopied] = useState("")
 

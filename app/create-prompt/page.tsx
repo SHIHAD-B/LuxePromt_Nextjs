@@ -2,7 +2,7 @@
 import { useUser } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
 import Form from "@components/Form"
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent, useState } from "react"
 import axios from "axios"
 
 const CreatePrompt = () => {

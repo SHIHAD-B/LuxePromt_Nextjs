@@ -13,7 +13,7 @@ const MyProfile = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/users/${user?.primaryEmailAddress?.emailAddress}/post`);
+        const response = await axios.get(`/api/users/${user?.primaryEmailAddress?.emailAddress}/post`);
         console.log(response.data, "res data");
         setPosts(response.data);
       } catch (error) {

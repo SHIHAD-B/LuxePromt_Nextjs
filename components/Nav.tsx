@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from 'next/image';
 import logo from '../public/assets/images/logo.svg';
 import { useUser, SignInButton, UserButton } from '@clerk/nextjs';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Nav = () => {
     const { user } = useUser();
